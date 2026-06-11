@@ -1,0 +1,31 @@
+{
+  "name": "GharDhoondo",
+  "short_name": "GharDhoondo",
+  "description": "Find Your Perfect Home — Discover nearby rooms for rent and land/plots for sale on an interactive map.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F0A1A",
+  "theme_color": "#6366F1",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["real estate", "housing", "property"],
+  "icons": [
+    {
+      "src": "/logo-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

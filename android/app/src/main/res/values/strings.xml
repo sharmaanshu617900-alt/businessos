@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GharDhoondo</string>
+    <string name="title_activity_main">GharDhoondo</string>
+    <string name="package_name">com.ghardhoondo.app</string>
+    <string name="custom_url_scheme">com.ghardhoondo.app</string>
+</resources>

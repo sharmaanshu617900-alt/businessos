@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" fill="none">
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="houseGrad" x1="4" y1="2" x2="38" y2="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <!-- House icon -->
+  <rect x="2" y="2" width="40" height="40" rx="12" fill="url(#logoGrad)"/>
+  <path d="M20 10L8 20V32C8 33.1 8.9 34 10 34H17V26H23V34H30C31.1 34 32 33.1 32 32V20L20 10Z" fill="white" opacity="0.95"/>
+  <!-- Location pin accent -->
+  <circle cx="32" cy="14" r="5" fill="#F59E0B"/>
+  <path d="M32 11.5C33.38 11.5 34.5 12.62 34.5 14C34.5 15.93 32 18 32 18C32 18 29.5 15.93 29.5 14C29.5 12.62 30.62 11.5 32 11.5Z" fill="white"/>
+  <!-- Text -->
+  <text x="52" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="url(#logoGrad)">Ghar</text>
+  <text x="98" y="22" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#64748B">Dhoondo</text>
+  <text x="52" y="36" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="500" fill="#94A3B8" letter-spacing="0.5">Find Your Perfect Home</text>
+</svg>
