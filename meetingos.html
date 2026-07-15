@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeetingOS — Never lose a decision again</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300&family=Playfair+Display:wght@400;500;600&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --white: #ffffff;
+  --bg: #fafafa;
+  --bg2: #f5f5f7;
+  --surface: #ffffff;
+  --border: #e5e5e7;
+  --border-soft: #f0f0f2;
+  --text: #1d1d1f;
+  --text-mid: #424245;
+  --text-muted: #86868b;
+  --text-dim: #b8b8bc;
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --accent-soft: #e8f0fb;
+  --green: #1d8348;
+  --green-bg: #eafaf1;
+  --amber: #9a6700;
+  --amber-bg: #fef9ec;
+  --red: #c0392b;
+  --red-bg: #fdf2f0;
+  --sidebar-w: 240px;
+  --radius: 12px;
+  --radius-lg: 18px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── LANDING ─── */
+#landing { display: block; }
+#app { display: none; }
+
+/* NAV */
+.l-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border-soft);
+  height: 52px;
+  display: flex; align-items: center;
+  padding: 0 40px;
+}
+
+.l-nav-inner {
+  max-width: 1100px; margin: 0 auto; width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.l-logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+.l-logo-icon {
+  width: 26px; height: 26px;
+  background: var(--text);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: white;
+}
+.l-logo-name {
+  font-size: 16px; font-weight: 600; color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.l-nav-links { display: flex; gap: 28px; }
+.l-nav-links a {
+  font-size: 13px; color: var(--text-mid); text-decoration: none;
+  transition: color 0.15s;
+}
+.l-nav-links a:hover { color: var(--text); }
+
+.l-nav-cta { display: flex; gap: 10px; align-items: center; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 18px; border-radius: 980px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; border: none;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s; text-decoration: none;
+}
+.btn-primary {
+  background: var(--accent); color: white;
+}
+.btn-primary:hover { background: var(--accent-hover); transform: scale(1.02); }
+
+.btn-ghost {
+  background: transparent; color: var(--text-mid);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: var(--bg2); color: var(--text); }
+
+.btn-white {
+  background: white; color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.btn-white:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: scale(1.02); }
+
+/* HERO */
+.l-hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  background: var(--white);
+  position: relative; overflow: hidden;
+}
+
+.l-hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,113,227,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px; font-weight: 500;
+  padding: 5px 14px; border-radius: 980px;
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
+}
+.hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+.l-hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(44px, 7vw, 80px);
+  font-weight: 500;
+  letter-spacing: -1.5px;
+  line-height: 1.08;
+  color: var(--text);
+  max-width: 800px;
+  margin-bottom: 22px;
+}
+
+.l-hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.l-hero p {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--text-muted);
+  max-width: 520px;
+  line-height: 1.65;
+  margin-bottom: 38px;
+  font-weight: 300;
+}
+
+.hero-cta-group { display: flex; gap: 12px; justify-content: center; margin-bottom: 60px; }
+.btn-hero-primary {
+  padding: 14px 28px; font-size: 15px; border-radius: 980px;
+  background: var(--text); color: white; font-weight: 500;
+  transition: all 0.2s;
+}
+.btn-hero-primary:hover { background: #2d2d2f; transform: scale(1.02); }
+
+.btn-hero-ghost {
+  padding: 14px 28px; font-size: 15px; border-radius: 980px;
+  background: transparent; color: var(--text-mid);
+  border: 1px solid var(--border);
+}
+.btn-hero-ghost:hover { background: var(--bg2); }
+
+/* HERO VISUAL */
+.hero-visual {
+  width: 100%; max-width: 900px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-visual-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.wdot { width: 11px; height: 11px; border-radius: 50%; }
+.wdot-r { background: #ff5f57; }
+.wdot-y { background: #ffbd2e; }
+.wdot-g { background: #28c840; }
+.hero-url {
+  flex: 1; background: white; border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 12px; font-size: 12px;
+  color: var(--text-muted); text-align: center; margin: 0 12px;
+}
+
+/* mini dashboard inside hero */
+.mini-dash {
+  display: grid; grid-template-columns: 180px 1fr;
+  min-height: 380px;
+}
+.mini-sidebar {
+  background: var(--bg2); border-right: 1px solid var(--border);
+  padding: 16px 12px;
+}
+.mini-logo { display: flex; align-items: center; gap: 7px; padding: 4px 8px; margin-bottom: 16px; }
+.mini-logo-box { width: 22px; height: 22px; background: var(--text); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: white; }
+.mini-logo-text { font-size: 12px; font-weight: 600; }
+
+.mini-nav-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px; border-radius: 7px;
+  font-size: 11.5px; color: var(--text-muted); margin-bottom: 2px;
+  cursor: default;
+}
+.mini-nav-item.active { background: white; color: var(--text); font-weight: 500; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.mini-nav-icon { font-size: 12px; width: 16px; text-align: center; }
+
+.mini-main { padding: 18px; background: var(--bg); }
+.mini-title { font-size: 14px; font-weight: 600; margin-bottom: 14px; letter-spacing: -0.2px; }
+.mini-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px; }
+.mini-stat {
+  background: white; border: 1px solid var(--border);
+  border-radius: 9px; padding: 11px 12px;
+}
+.mini-stat-val { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
+.mini-stat-label { font-size: 9.5px; color: var(--text-muted); margin-top: 2px; }
+
+.mini-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: 9px; overflow: hidden;
+}
+.mini-card-header { padding: 10px 12px; border-bottom: 1px solid var(--border-soft); font-size: 10.5px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.mini-row { padding: 9px 12px; border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; gap: 8px; }
+.mini-row:last-child { border-bottom: none; }
+.mini-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.mini-row-text { font-size: 11px; color: var(--text); flex: 1; }
+.mini-tag { font-size: 9.5px; padding: 2px 6px; border-radius: 20px; background: var(--accent-soft); color: var(--accent); }
+.mini-tag-green { background: var(--green-bg); color: var(--green); }
+
+/* SECTIONS */
+.l-section {
+  padding: 100px 24px;
+  max-width: 1100px; margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 12px; font-weight: 500; color: var(--accent);
+  letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 500; letter-spacing: -0.8px;
+  line-height: 1.1; color: var(--text); margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 17px; color: var(--text-muted);
+  line-height: 1.7; max-width: 520px; font-weight: 300;
+}
+
+/* PROBLEM SECTION */
+.l-problem {
+  background: var(--text); color: white; padding: 100px 24px;
+}
+.l-problem-inner { max-width: 1100px; margin: 0 auto; }
+.l-problem h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 500; letter-spacing: -1px;
+  line-height: 1.1; margin-bottom: 60px; color: white;
+}
+.l-problem h2 em { font-style: italic; color: rgba(255,255,255,0.45); }
+
+.problem-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.08); border-radius: var(--radius-lg); overflow: hidden; }
+.problem-item { background: var(--text); padding: 36px 32px; }
+.problem-number { font-size: 40px; font-weight: 700; color: rgba(255,255,255,0.12); letter-spacing: -2px; margin-bottom: 16px; font-family: 'Playfair Display', serif; }
+.problem-text { font-size: 17px; font-weight: 400; line-height: 1.5; color: rgba(255,255,255,0.85); }
+.problem-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 8px; }
+
+/* FEATURES */
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 56px; }
+.feature-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 32px 28px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.feature-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.feature-icon { font-size: 28px; margin-bottom: 18px; }
+.feature-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 10px; }
+.feature-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+/* HOW IT WORKS */
+.how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 64px; }
+.how-steps { display: flex; flex-direction: column; gap: 0; }
+.how-step {
+  display: flex; gap: 20px; padding: 24px 0;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer; transition: all 0.2s;
+}
+.how-step:first-child { padding-top: 0; }
+.how-step:last-child { border-bottom: none; }
+.how-step.active .how-step-num { background: var(--text); color: white; }
+.how-step-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg2); color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; flex-shrink: 0;
+  transition: all 0.2s;
+}
+.how-step-content {}
+.how-step-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.how-step-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+
+.how-visual {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 60px rgba(0,0,0,0.08);
+  overflow: hidden; min-height: 360px;
+  display: flex; flex-direction: column;
+}
+.how-visual-top {
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 14px 18px; display: flex; align-items: center; gap: 8px;
+}
+.how-visual-body { padding: 24px; flex: 1; }
+
+/* TESTIMONIALS */
+.testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 56px; }
+.testimonial-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 28px 24px;
+}
+.testimonial-quote { font-size: 15px; line-height: 1.65; color: var(--text-mid); margin-bottom: 20px; font-weight: 300; }
+.testimonial-author { display: flex; align-items: center; gap: 10px; }
+.testimonial-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: white; flex-shrink: 0;
+}
+.testimonial-name { font-size: 13px; font-weight: 600; }
+.testimonial-role { font-size: 12px; color: var(--text-muted); }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 56px; align-items: start; }
+.pricing-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 32px 28px;
+}
+.pricing-card.featured {
+  background: var(--text); border-color: var(--text);
+  transform: scale(1.03);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+.pricing-card.featured .pricing-name { color: rgba(255,255,255,0.6); }
+.pricing-card.featured .pricing-price { color: white; }
+.pricing-card.featured .pricing-price-sub { color: rgba(255,255,255,0.5); }
+.pricing-card.featured .pricing-feature { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.08); }
+.pricing-card.featured .pricing-feature-check { color: rgba(255,255,255,0.6); }
+
+.pricing-name { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+.pricing-price { font-size: 42px; font-weight: 700; letter-spacing: -1.5px; font-family: 'Playfair Display', serif; }
+.pricing-price-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+.pricing-features { display: flex; flex-direction: column; gap: 0; margin-bottom: 28px; }
+.pricing-feature { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); font-size: 13.5px; }
+.pricing-feature:last-child { border-bottom: none; }
+.pricing-feature-check { color: var(--accent); font-size: 13px; flex-shrink: 0; }
+
+/* CTA SECTION */
+.l-cta {
+  background: var(--bg2); padding: 100px 24px; text-align: center;
+  border-top: 1px solid var(--border);
+}
+.l-cta-inner { max-width: 600px; margin: 0 auto; }
+
+/* FOOTER */
+.l-footer {
+  background: var(--text); color: rgba(255,255,255,0.5);
+  padding: 60px 40px 40px;
+}
+.l-footer-inner { max-width: 1100px; margin: 0 auto; }
+.l-footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+.footer-brand-name { font-size: 16px; font-weight: 600; color: white; margin-bottom: 12px; }
+.footer-brand-desc { font-size: 13px; line-height: 1.65; }
+.footer-col-title { font-size: 12px; font-weight: 600; color: white; margin-bottom: 14px; }
+.footer-link { display: block; font-size: 13px; margin-bottom: 8px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+.footer-link:hover { color: white; }
+.l-footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-size: 12px; }
+
+/* ─── APP / DASHBOARD ─── */
+.app-body {
+  display: flex; min-height: 100vh;
+  background: var(--bg);
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w); min-height: 100vh;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  padding: 20px 0;
+  position: fixed; top: 0; left: 0; z-index: 100;
+}
+
+.sidebar-logo {
+  padding: 4px 18px 20px;
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: 12px;
+}
+.sidebar-logo-row { display: flex; align-items: center; gap: 9px; }
+.sidebar-logo-icon {
+  width: 28px; height: 28px; background: var(--text);
+  border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: white;
+}
+.sidebar-logo-name { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+.sidebar-logo-sub { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
+
+.nav-section-label {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  color: var(--text-dim); padding: 12px 18px 4px;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 18px; cursor: pointer;
+  color: var(--text-muted); font-size: 13.5px; font-weight: 450;
+  transition: all 0.15s; border-left: 2px solid transparent;
+  text-decoration: none;
+}
+.nav-item:hover { color: var(--text); background: var(--bg); }
+.nav-item.active {
+  color: var(--text); font-weight: 500;
+  background: var(--bg2); border-left-color: var(--text);
+}
+.nav-icon { font-size: 14px; width: 18px; text-align: center; }
+.nav-badge {
+  margin-left: auto; background: var(--text); color: white;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 6px; border-radius: 20px; min-width: 18px; text-align: center;
+}
+.nav-badge-amber { background: #f59e0b; }
+.nav-badge-red { background: #ef4444; }
+
+.sidebar-footer {
+  margin-top: auto; padding: 16px 14px 0;
+  border-top: 1px solid var(--border-soft);
+}
+.user-card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; border-radius: var(--radius);
+  background: var(--bg2); cursor: pointer;
+}
+.user-card:hover { background: var(--border-soft); }
+.user-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; color: white; flex-shrink: 0;
+}
+.user-name { font-size: 12.5px; font-weight: 500; }
+.user-plan { font-size: 11px; color: var(--text-muted); }
+
+/* MAIN */
+.app-main { margin-left: var(--sidebar-w); flex: 1; }
+
+.page { display: none; padding: 40px 44px; min-height: 100vh; }
+.page.active { display: block; }
+
+/* PAGE HEADER */
+.page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 32px; }
+.page-title { font-size: 26px; font-weight: 700; letter-spacing: -0.6px; color: var(--text); }
+.page-sub { font-size: 13.5px; color: var(--text-muted); margin-top: 3px; }
+.header-actions { display: flex; gap: 10px; align-items: center; }
+
+/* STAT CARDS */
+.stats-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 28px; }
+.stat-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+  transition: box-shadow 0.2s;
+}
+.stat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.stat-label { font-size: 11px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+.stat-value { font-size: 30px; font-weight: 700; letter-spacing: -1px; color: var(--text); font-family: 'Playfair Display', serif; }
+.stat-delta { font-size: 11.5px; margin-top: 6px; }
+.delta-up { color: var(--green); }
+.delta-neutral { color: var(--text-muted); }
+.delta-down { color: var(--red); }
+
+/* CARDS */
+.card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--radius); transition: box-shadow 0.2s;
+}
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+.card-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border-soft);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ALERT BANNER */
+.alert-banner {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 18px; border-radius: var(--radius);
+  background: #fffbec; border: 1px solid #f5d76e;
+  margin-bottom: 24px;
+}
+.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.alert-title { font-size: 13px; font-weight: 600; color: #854d0e; margin-bottom: 2px; }
+.alert-desc { font-size: 12.5px; color: #92400e; line-height: 1.5; }
+.alert-link { color: var(--accent); cursor: pointer; text-decoration: underline; }
+
+/* 2COL */
+.two-col { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
+.three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+
+/* MEETING ROW */
+.meeting-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px; border-bottom: 1px solid var(--border-soft);
+  cursor: pointer; transition: background 0.15s;
+}
+.meeting-row:last-child { border-bottom: none; }
+.meeting-row:hover { background: var(--bg); }
+
+.meeting-icon-box {
+  width: 38px; height: 38px; border-radius: 9px;
+  background: var(--bg2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; flex-shrink: 0;
+}
+.meeting-title { font-size: 13.5px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.meeting-meta { font-size: 12px; color: var(--text-muted); display: flex; gap: 10px; }
+.meeting-info { flex: 1; min-width: 0; }
+.meeting-stats { display: flex; gap: 20px; flex-shrink: 0; }
+.m-stat-val { font-size: 14px; font-weight: 700; color: var(--text); text-align: center; }
+.m-stat-label { font-size: 10.5px; color: var(--text-muted); text-align: center; }
+
+/* TAGS */
+.tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 6px;
+  font-size: 11.5px; font-weight: 500;
+}
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-amber { background: var(--amber-bg); color: var(--amber); }
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-blue { background: var(--accent-soft); color: var(--accent); }
+.tag-gray { background: var(--bg2); color: var(--text-muted); border: 1px solid var(--border); }
+
+/* DECISION ROWS */
+.decision-row {
+  display: flex; gap: 14px; padding: 14px 20px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer; transition: background 0.15s;
+}
+.decision-row:last-child { border-bottom: none; }
+.decision-row:hover { background: var(--bg); }
+.decision-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 6px; }
+.decision-dot-amber { background: #f59e0b; }
+.decision-text { font-size: 13.5px; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+.decision-meta { font-size: 11.5px; color: var(--text-muted); display: flex; gap: 10px; }
+
+/* ACTION ROWS */
+.action-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 20px; border-bottom: 1px solid var(--border-soft);
+  transition: background 0.15s;
+}
+.action-row:last-child { border-bottom: none; }
+.action-row:hover { background: var(--bg); }
+.checkbox {
+  width: 16px; height: 16px; border-radius: 4px;
+  border: 1.5px solid var(--border); flex-shrink: 0;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.checkbox.done { background: var(--text); border-color: var(--text); }
+.checkbox.done::after { content: '✓'; font-size: 10px; color: white; }
+.action-text { flex: 1; font-size: 13px; color: var(--text); }
+.action-text.done { text-decoration: line-through; color: var(--text-muted); }
+.owner-chip { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.owner-initial {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 700; color: white;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* HEALTH RING */
+.health-ring {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: conic-gradient(var(--accent) 0% calc(var(--pct,73) * 1%), var(--border) calc(var(--pct,73) * 1%) 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
+}
+.health-ring::before {
+  content: ''; position: absolute;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: white;
+}
+.health-score { position: relative; z-index: 1; font-size: 14px; font-weight: 700; }
+
+/* TABS */
+.tabs {
+  display: flex; gap: 2px; margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+}
+.tab {
+  padding: 9px 18px; font-size: 13.5px; font-weight: 500;
+  color: var(--text-muted); cursor: pointer; border: none;
+  background: none; font-family: 'Inter', sans-serif;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: all 0.15s;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+/* TRANSCRIPT */
+.transcript-line { display: flex; gap: 14px; padding: 10px 20px; border-bottom: 1px solid var(--border-soft); }
+.transcript-time { font-size: 11px; color: var(--accent); min-width: 38px; margin-top: 2px; font-variant-numeric: tabular-nums; font-weight: 500; }
+.transcript-speaker { font-size: 12px; font-weight: 600; min-width: 72px; color: var(--text-muted); margin-top: 2px; }
+.transcript-text { font-size: 13px; line-height: 1.65; color: var(--text); }
+.transcript-text mark { background: #fff3c4; color: var(--text); border-radius: 2px; padding: 0 2px; }
+
+/* PARTICIPANTS */
+.participant-row { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--border-soft); }
+.participant-row:last-child { border-bottom: none; }
+.p-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: white; flex-shrink: 0; }
+.p-name { font-size: 13.5px; font-weight: 500; }
+.p-role { font-size: 12px; color: var(--text-muted); }
+.talk-bar { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.talk-bg { width: 80px; height: 3px; background: var(--border); border-radius: 2px; }
+.talk-fill { height: 3px; background: var(--accent); border-radius: 2px; }
+.talk-pct { font-size: 11.5px; color: var(--text-muted); min-width: 28px; text-align: right; }
+
+/* SEARCH */
+.search-wrap {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius);
+  margin-bottom: 20px; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.search-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.1); }
+.search-inp { flex: 1; border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 14.5px; color: var(--text); background: none; }
+.search-inp::placeholder { color: var(--text-dim); }
+
+.search-result { padding: 18px 20px; border-bottom: 1px solid var(--border-soft); cursor: pointer; transition: background 0.15s; }
+.search-result:last-child { border-bottom: none; }
+.search-result:hover { background: var(--bg); }
+.search-result-title { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
+.search-result-excerpt { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.search-result-excerpt mark { background: #fff3c4; color: var(--text); border-radius: 2px; padding: 0 2px; }
+.search-result-meta { font-size: 11.5px; color: var(--text-dim); margin-top: 8px; display: flex; gap: 12px; }
+
+/* TIMELINE */
+.tl { position: relative; padding-left: 22px; }
+.tl::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 22px; }
+.tl-item::before { content: ''; position: absolute; left: -19px; top: 5px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid white; box-shadow: 0 0 0 1px var(--accent); }
+.tl-date { font-size: 11px; color: var(--text-dim); margin-bottom: 3px; }
+.tl-text { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+.tl-source { font-size: 12px; color: var(--accent); margin-top: 3px; cursor: pointer; }
+
+/* UPLOAD */
+.upload-zone {
+  border: 2px dashed var(--border); border-radius: var(--radius-lg);
+  padding: 56px; text-align: center; cursor: pointer;
+  transition: all 0.2s; background: white;
+}
+.upload-zone:hover { border-color: var(--accent); background: var(--accent-soft); }
+.upload-icon { font-size: 40px; margin-bottom: 16px; }
+.upload-title { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+.upload-sub { font-size: 14px; color: var(--text-muted); }
+.upload-formats { display: flex; gap: 8px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+
+/* FORM */
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%; background: white; border: 1px solid var(--border);
+  border-radius: 8px; padding: 10px 14px; color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: 14px; outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,113,227,0.08); }
+
+/* DNA / health */
+.dna-grid { display: flex; flex-direction: column; gap: 10px; }
+.dna-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
+.dna-label { color: var(--text-muted); }
+.dna-val { font-weight: 500; }
+.dna-val.good { color: var(--green); }
+.dna-val.warn { color: var(--amber); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* UTIL */
+.mb-16 { margin-bottom: 16px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+.p-20 { padding: 20px; }
+.p-24 { padding: 24px; }
+.divider { height: 1px; background: var(--border-soft); margin: 20px 0; }
+
+/* SECTION WRAPPER */
+.section-wrap { max-width: 1100px; margin: 0 auto; padding: 100px 24px; }
+
+/* ─── SCROLL REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+/* Stagger children */
+.stagger-children .reveal:nth-child(1) { transition-delay: 0s; }
+.stagger-children .reveal:nth-child(2) { transition-delay: 0.08s; }
+.stagger-children .reveal:nth-child(3) { transition-delay: 0.16s; }
+.stagger-children .reveal:nth-child(4) { transition-delay: 0.24s; }
+.stagger-children .reveal:nth-child(5) { transition-delay: 0.32s; }
+.stagger-children .reveal:nth-child(6) { transition-delay: 0.4s; }
+
+/* ─── PAGE TRANSITIONS ─── */
+#landing, #app {
+  transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#landing.page-exit {
+  opacity: 0;
+  pointer-events: none;
+}
+#app.page-enter {
+  animation: pageSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+#app.page-exit {
+  animation: pageSlideOut 0.35s cubic-bezier(0.55, 0, 1, 0.45) both;
+}
+@keyframes pageSlideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pageSlideOut {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-20px); }
+}
+
+/* ─── NAV SCROLL EFFECT ─── */
+.l-nav.scrolled {
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+}
+
+/* ─── BUTTON RIPPLE ─── */
+.btn-ripple {
+  position: relative; overflow: hidden;
+}
+.btn-ripple::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+.btn-ripple:active::after {
+  width: 300px; height: 300px;
+}
+.btn-hero-primary.btn-ripple::after {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ─── CARD HOVER GLOW ─── */
+.feature-card {
+  position: relative;
+}
+.feature-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: var(--radius-lg);
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: linear-gradient(135deg, rgba(0,113,227,0.04) 0%, rgba(0,113,227,0.01) 100%);
+  pointer-events: none;
+}
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+/* ─── COUNTER ANIMATION ─── */
+.counter-animate {
+  display: inline-block;
+}
+
+/* ─── HERO PARALLAX ─── */
+.hero-visual {
+  transition: transform 0.1s linear;
+}
+
+/* ─── PULSE DOT ─── */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.8); opacity: 0.4; }
+}
+.hero-eyebrow-dot {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ─── TYPING CURSOR ─── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: var(--accent);
+  font-weight: 300;
+}
+
+/* ─── FLOATING ANIMATION ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ─── GRADIENT SHIMMER ─── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.pricing-card.featured {
+  position: relative;
+}
+.pricing-card.featured::before {
+  content: '';
+  position: absolute; top: -1px; left: -1px; right: -1px; bottom: -1px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── PROBLEM ITEM HOVER ─── */
+.problem-item {
+  transition: background 0.3s;
+}
+.problem-item:hover {
+  background: #2a2a2c;
+}
+
+/* ─── TESTIMONIAL CARD HOVER ─── */
+.testimonial-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+/* ─── PRICING CARD HOVER ─── */
+.pricing-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.pricing-card:not(.featured):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.pricing-card.featured:hover {
+  transform: scale(1.05);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.22);
+}
+
+/* ─── STAT VALUE GLOW ─── */
+.stat-value {
+  transition: text-shadow 0.3s;
+}
+.stat-card:hover .stat-value {
+  text-shadow: 0 0 20px rgba(0,113,227,0.15);
+}
+
+/* ─── HOW STEP ACTIVE GLOW ─── */
+.how-step.active .how-step-num {
+  box-shadow: 0 0 0 4px rgba(0,113,227,0.15);
+}
+
+/* ─── FOOTER LINK HOVER ─── */
+.footer-link {
+  transition: color 0.15s, transform 0.2s;
+  display: inline-block;
+}
+.footer-link:hover {
+  transform: translateX(3px);
+}
+
+/* ─── COUNTER ANIM ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease both; }
+.fade-up-d1 { animation-delay: 0.1s; }
+.fade-up-d2 { animation-delay: 0.2s; }
+.fade-up-d3 { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ LANDING PAGE ═══════════════════ -->
+<div id="landing">
+
+<!-- NAV -->
+<nav class="l-nav">
+  <div class="l-nav-inner">
+    <a class="l-logo" href="#">
+      <div class="l-logo-icon">⬡</div>
+      <span class="l-logo-name">MeetingOS</span>
+    </a>
+    <div class="l-nav-links">
+      <a href="#">Features</a>
+      <a href="#">How it works</a>
+      <a href="#">Pricing</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="l-nav-cta">
+      <a href="#" class="btn btn-ghost" onclick="openApp();return false;">Sign in</a>
+      <a href="#" class="btn btn-primary" onclick="openApp();return false;">Start free →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="l-hero">
+  <div class="hero-eyebrow float-anim">
+    <span class="hero-eyebrow-dot"></span>
+    Now in public beta — join 2,400+ startups
+  </div>
+
+  <h1 class="fade-up">Your meetings deserve<br>to be <em>remembered.</em></h1>
+
+  <p class="fade-up fade-up-d1">MeetingOS turns every call into structured company knowledge — decisions, action items, and context that never disappears.</p>
+
+  <div class="hero-cta-group fade-up fade-up-d2">
+    <a href="#" class="btn btn-hero-primary" onclick="openApp();return false;">Start for free</a>
+    <a href="#" class="btn btn-hero-ghost">Watch demo ▷</a>
+  </div>
+
+  <!-- Mini Dashboard Preview -->
+  <div class="hero-visual fade-up fade-up-d3">
+    <div class="hero-visual-bar">
+      <span class="wdot wdot-r"></span>
+      <span class="wdot wdot-y"></span>
+      <span class="wdot wdot-g"></span>
+      <div class="hero-url">app.meetingos.com/dashboard</div>
+    </div>
+    <div class="mini-dash">
+      <div class="mini-sidebar">
+        <div class="mini-logo">
+          <div class="mini-logo-box">⬡</div>
+          <span class="mini-logo-text">MeetingOS</span>
+        </div>
+        <div class="mini-nav-item active"><span class="mini-nav-icon">⬡</span> Dashboard</div>
+        <div class="mini-nav-item"><span class="mini-nav-icon">◈</span> Meetings</div>
+        <div class="mini-nav-item"><span class="mini-nav-icon">◆</span> Decisions</div>
+        <div class="mini-nav-item"><span class="mini-nav-icon">✦</span> Action Items</div>
+        <div class="mini-nav-item"><span class="mini-nav-icon">◎</span> Search</div>
+        <div class="mini-nav-item"><span class="mini-nav-icon">⋮</span> Timeline</div>
+      </div>
+      <div class="mini-main">
+        <div class="mini-title">Good morning, Aryan ☀</div>
+        <div class="mini-stats">
+          <div class="mini-stat"><div class="mini-stat-val">47</div><div class="mini-stat-label">Meetings</div></div>
+          <div class="mini-stat"><div class="mini-stat-val">134</div><div class="mini-stat-label">Decisions</div></div>
+          <div class="mini-stat"><div class="mini-stat-val">28</div><div class="mini-stat-label">Open Tasks</div></div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-header">Recent Decisions</div>
+          <div class="mini-row"><div class="mini-dot"></div><div class="mini-row-text">Launch beta — August 25</div><span class="mini-tag mini-tag-green">✓</span></div>
+          <div class="mini-row"><div class="mini-dot"></div><div class="mini-row-text">Pricing: $79/month Startup</div><span class="mini-tag">Jun 27</span></div>
+          <div class="mini-row"><div class="mini-dot"></div><div class="mini-row-text">Raise $2M seed round</div><span class="mini-tag mini-tag-green">✓</span></div>
+          <div class="mini-row"><div class="mini-dot" style="background:#f59e0b;"></div><div class="mini-row-text">Payment: Stripe ⚑ conflict</div><span class="mini-tag" style="background:#fef3c7;color:#92400e;">Alert</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="l-problem">
+  <div class="l-problem-inner">
+    <h2 class="reveal">Companies lose<br><em>thousands of hours</em><br>forgetting what was decided.</h2>
+    <div class="problem-grid stagger-children">
+      <div class="problem-item reveal">
+        <div class="problem-number">01</div>
+        <div class="problem-text">Important decisions are made in meetings — then forgotten the next day.</div>
+        <div class="problem-sub">Average startup has 6+ meetings daily.</div>
+      </div>
+      <div class="problem-item reveal">
+        <div class="problem-number">02</div>
+        <div class="problem-text">New team members have no context. Onboarding takes weeks.</div>
+        <div class="problem-sub">Same information is explained 8× on average.</div>
+      </div>
+      <div class="problem-item reveal">
+        <div class="problem-number">03</div>
+        <div class="problem-text">The same arguments happen over and over. Nobody remembers the last decision.</div>
+        <div class="problem-sub">61% of meetings revisit resolved topics.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">What MeetingOS does</div>
+  <div class="section-title reveal">Everything your meetings<br>produce, captured.</div>
+  <p class="section-sub reveal">Upload any recording. MeetingOS does the rest — automatically, in minutes.</p>
+
+  <div class="features-grid stagger-children">
+    <div class="feature-card reveal">
+      <div class="feature-icon">◆</div>
+      <div class="feature-title">Decision Hub</div>
+      <div class="feature-desc">Every decision ever made, searchable and linked to its original meeting. Never lose context again.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">✦</div>
+      <div class="feature-title">Action Center</div>
+      <div class="feature-desc">Tasks with owners and deadlines, automatically extracted. Weekly digest keeps everyone accountable.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">◎</div>
+      <div class="feature-title">Memory Search</div>
+      <div class="feature-desc">Ask anything. "What did we decide about pricing?" gets you the exact meeting, moment, and decision.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">⚑</div>
+      <div class="feature-title">Contradiction Alerts</div>
+      <div class="feature-desc">MeetingOS flags when a new decision conflicts with a past one — before it causes problems.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">⬡</div>
+      <div class="feature-title">Meeting DNA</div>
+      <div class="feature-desc">Every meeting gets a health score — clarity of decisions, action item assignment, participation balance.</div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">⋮</div>
+      <div class="feature-title">Topic Threads</div>
+      <div class="feature-desc">See how any topic evolved across all meetings — a living timeline of your company's thinking.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div style="background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">How it works</div>
+  <div class="section-title reveal">From recording<br>to company knowledge.</div>
+
+  <div class="how-grid">
+    <div class="how-steps reveal-left">
+      <div class="how-step active">
+        <div class="how-step-num">1</div>
+        <div class="how-step-content">
+          <div class="how-step-title">Upload your recording</div>
+          <div class="how-step-desc">Drop any MP3, MP4, WAV, or M4A file. MeetingOS accepts Zoom, Meet, Teams, and phone recordings.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <div class="how-step-content">
+          <div class="how-step-title">AI transcribes and analyzes</div>
+          <div class="how-step-desc">In under 4 minutes, MeetingOS creates a full transcript with speaker identification and key moment detection.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <div class="how-step-content">
+          <div class="how-step-title">Decisions and tasks are extracted</div>
+          <div class="how-step-desc">Every decision, action item, and key topic is pulled out, categorized, and linked to the exact moment in the recording.</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">4</div>
+        <div class="how-step-content">
+          <div class="how-step-title">It becomes searchable forever</div>
+          <div class="how-step-desc">Everything joins your company's memory — cross-referenced, contradiction-checked, and ready to search anytime.</div>
+        </div>
+      </div>
+    </div>
+    <div class="how-visual reveal-right float-anim">
+      <div class="how-visual-top">
+        <span class="wdot wdot-r"></span>
+        <span class="wdot wdot-y"></span>
+        <span class="wdot wdot-g"></span>
+        <span style="font-size:12px;color:var(--text-muted);margin-left:8px;">Processing complete</span>
+        <span class="tag tag-green" style="margin-left:auto;">✓ Done</span>
+      </div>
+      <div class="how-visual-body">
+        <div style="font-size:14px;font-weight:600;margin-bottom:16px;">Q3 Roadmap Review · 52 min</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+            <div style="font-size:20px;font-weight:700;">7</div>
+            <div style="font-size:11px;color:var(--text-muted);">Decisions</div>
+          </div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;">
+            <div style="font-size:20px;font-weight:700;">12</div>
+            <div style="font-size:11px;color:var(--text-muted);">Action items</div>
+          </div>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px;">
+          <div style="font-size:10.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px;">Top Decisions</div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;font-size:12px;"><span style="color:var(--accent);font-size:10px;">●</span> Launch beta August 25, 50 users</div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;font-size:12px;"><span style="color:var(--accent);font-size:10px;">●</span> Deprioritize mobile app</div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:12px;"><span style="color:var(--accent);font-size:10px;">●</span> Aryan owns investor deck</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-muted);">
+          <span style="color:var(--green);">✓</span> Contradiction check passed
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">Founders love it</div>
+  <div class="section-title reveal">Used by startups<br>moving fast.</div>
+
+  <div class="testimonials-grid stagger-children">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"An investor asked us why we changed our pricing model. I found the exact meeting where we discussed it in 8 seconds. That's never happened before."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#667eea,#764ba2);">R</div>
+        <div><div class="testimonial-name">Rahul Mehta</div><div class="testimonial-role">CEO, Stackr (YC W24)</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"We onboarded 3 engineers last month. Each one got a MeetingOS link on day one. They were productive in hours, not weeks."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#11998e,#38ef7d);">P</div>
+        <div><div class="testimonial-name">Priya Iyer</div><div class="testimonial-role">CTO, Kira Health</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"The contradiction detector is the feature I didn't know I needed. We almost shipped two conflicting features because of a forgotten decision. MeetingOS caught it."</div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar" style="background:linear-gradient(135deg,#f093fb,#f5576c);">A</div>
+        <div><div class="testimonial-name">Aditya Bansal</div><div class="testimonial-role">Founder, Lumenify</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+<section class="section-wrap">
+  <div class="section-eyebrow reveal">Pricing</div>
+  <div class="section-title reveal">Simple, honest pricing.</div>
+  <p class="section-sub reveal">Start free. Upgrade when your team grows.</p>
+
+  <div class="pricing-grid stagger-children">
+    <div class="pricing-card reveal">
+      <div class="pricing-name">Free</div>
+      <div class="pricing-price">$0</div>
+      <div class="pricing-price-sub">forever</div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> 5 meetings/month</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Transcript + summary</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Decision extraction</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> 1 user</div>
+        <div class="pricing-feature" style="color:var(--text-dim);"><span class="pricing-feature-check" style="color:var(--text-dim);">—</span> Search memory</div>
+        <div class="pricing-feature" style="color:var(--text-dim);"><span class="pricing-feature-check" style="color:var(--text-dim);">—</span> Contradiction alerts</div>
+      </div>
+      <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center;border-radius:8px;padding:11px;" onclick="openApp();return false;">Get started free</a>
+    </div>
+
+    <div class="pricing-card featured reveal">
+      <div class="pricing-name">Startup</div>
+      <div class="pricing-price" style="color:white;">$79</div>
+      <div class="pricing-price-sub">/month · up to 10 users</div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Unlimited meetings</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Full transcript + summary</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Decisions + action items</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Memory search</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Contradiction alerts</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Meeting DNA score</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Slack + Notion export</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Weekly digest email</div>
+      </div>
+      <a href="#" class="btn btn-white" style="width:100%;justify-content:center;border-radius:8px;padding:11px;" onclick="openApp();return false;">Start free trial →</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-name">Team</div>
+      <div class="pricing-price">$199</div>
+      <div class="pricing-price-sub">/month · unlimited users</div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Everything in Startup</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Unlimited users</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Topic threads</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Client portal</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> API access</div>
+        <div class="pricing-feature"><span class="pricing-feature-check">✓</span> Priority support</div>
+      </div>
+      <a href="#" class="btn btn-ghost" style="width:100%;justify-content:center;border-radius:8px;padding:11px;" onclick="openApp();return false;">Contact us</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CTA -->
+<section class="l-cta">
+  <div class="l-cta-inner">
+    <div class="reveal" style="font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:500;letter-spacing:-0.8px;line-height:1.1;margin-bottom:16px;">Start building your<br>company's memory.</div>
+    <p class="reveal" style="font-size:17px;color:var(--text-muted);margin-bottom:36px;font-weight:300;">Join 2,400+ startups that never lose a decision.</p>
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <a href="#" class="btn btn-hero-primary" onclick="openApp();return false;">Start free — no credit card</a>
+      <a href="#" class="btn btn-hero-ghost">Book a demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="l-footer">
+  <div class="l-footer-inner">
+    <div class="l-footer-top">
+      <div>
+        <div class="footer-brand-name">MeetingOS</div>
+        <div class="footer-brand-desc">The operating system for company meetings. Every decision, every task, every discussion — searchable forever.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <a class="footer-link" href="#">Features</a>
+        <a class="footer-link" href="#">Pricing</a>
+        <a class="footer-link" href="#">Changelog</a>
+        <a class="footer-link" href="#">Roadmap</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <a class="footer-link" href="#">About</a>
+        <a class="footer-link" href="#">Blog</a>
+        <a class="footer-link" href="#">Careers</a>
+        <a class="footer-link" href="#">Contact</a>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <a class="footer-link" href="#">Privacy</a>
+        <a class="footer-link" href="#">Terms</a>
+        <a class="footer-link" href="#">Security</a>
+      </div>
+    </div>
+    <div class="l-footer-bottom">
+      <span class="footer-copy">© 2026 MeetingOS. All rights reserved.</span>
+      <span class="footer-copy">Made with care for founders.</span>
+    </div>
+  </div>
+</footer>
+
+</div><!-- end #landing -->
+
+
+<!-- ═══════════════════ APP / DASHBOARD ═══════════════════ -->
+<div id="app">
+<div class="app-body">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-row">
+      <div class="sidebar-logo-icon">⬡</div>
+      <div>
+        <div class="sidebar-logo-name">MeetingOS</div>
+        <div class="sidebar-logo-sub">Company Memory</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-section-label">Overview</div>
+  <a class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">⬡</span> Dashboard</a>
+  <a class="nav-item" onclick="showPage('meetings')"><span class="nav-icon">◈</span> Meetings <span class="nav-badge">47</span></a>
+  <a class="nav-item" onclick="showPage('upload')"><span class="nav-icon">↑</span> Upload</a>
+
+  <div class="nav-section-label">Intelligence</div>
+  <a class="nav-item" onclick="showPage('decisions')"><span class="nav-icon">◆</span> Decisions <span class="nav-badge">134</span></a>
+  <a class="nav-item" onclick="showPage('actions')"><span class="nav-icon">✦</span> Actions <span class="nav-badge nav-badge-red">6</span></a>
+  <a class="nav-item" onclick="showPage('search')"><span class="nav-icon">◎</span> Search</a>
+
+  <div class="nav-section-label">Insights</div>
+  <a class="nav-item" onclick="showPage('timeline')"><span class="nav-icon">⋮</span> Timeline</a>
+  <a class="nav-item" onclick="showPage('alerts')"><span class="nav-icon">⚑</span> Alerts <span class="nav-badge nav-badge-amber">2</span></a>
+
+  <div class="sidebar-footer">
+    <div class="user-card">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name">Aryan Sharma</div>
+        <div class="user-plan">Startup · 10 seats</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;">
+      <a class="nav-item" onclick="closeDashboard()" style="color:var(--text-muted);font-size:12.5px;padding:8px 10px;">← Back to website</a>
+    </div>
+  </div>
+</aside>
+
+<main class="app-main">
+
+<!-- ── DASHBOARD ── -->
+<div class="page active" id="page-dashboard">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Good morning, Aryan ☀</div>
+      <div class="page-sub">Monday, June 29 · Your company memory at a glance</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ghost" onclick="showPage('search')">⌘ Search memory</button>
+      <button class="btn btn-primary" onclick="showPage('upload')">↑ Upload Meeting</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Meetings</div><div class="stat-value counter-animate" data-target="47">0</div><div class="stat-delta delta-up">↑ 8 this week</div></div>
+    <div class="stat-card"><div class="stat-label">Decisions</div><div class="stat-value counter-animate" data-target="134">0</div><div class="stat-delta delta-up">↑ 12 this week</div></div>
+    <div class="stat-card"><div class="stat-label">Open Tasks</div><div class="stat-value counter-animate" data-target="28">0</div><div class="stat-delta delta-neutral">6 overdue</div></div>
+    <div class="stat-card"><div class="stat-label">Hours Logged</div><div class="stat-value counter-animate" data-target="94" data-suffix="h">0</div><div class="stat-delta delta-up">↑ 11h this week</div></div>
+    <div class="stat-card"><div class="stat-label">Health Score</div><div class="stat-value counter-animate" data-target="87">0</div><div class="stat-delta delta-up">↑ 4 pts</div></div>
+  </div>
+
+  <!-- Alert -->
+  <div class="alert-banner mb-24">
+    <div class="alert-icon">⚑</div>
+    <div>
+      <div class="alert-title">Contradiction detected</div>
+      <div class="alert-desc">Apr 3 decision: use <strong>Stripe</strong>. Jun 27 meeting discussed <strong>Razorpay</strong>. Was this a deliberate change? <span class="alert-link" onclick="showPage('alerts')">Review →</span></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <!-- Recent meetings -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;">Recent Meetings</div>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:12px;" onclick="showPage('meetings')">View all →</button>
+      </div>
+      <div class="card mb-20">
+        <div class="meeting-row" onclick="showPage('detail')">
+          <div class="meeting-icon-box">🎯</div>
+          <div class="meeting-info"><div class="meeting-title">Q3 Product Roadmap Review</div><div class="meeting-meta"><span>Today, 10:00 AM</span><span>52 min</span><span>6 participants</span></div></div>
+          <div class="meeting-stats"><div><div class="m-stat-val">7</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">12</div><div class="m-stat-label">Actions</div></div></div>
+          <span class="tag tag-green">✓ Done</span>
+        </div>
+        <div class="meeting-row" onclick="showPage('detail')">
+          <div class="meeting-icon-box">💰</div>
+          <div class="meeting-info"><div class="meeting-title">Pricing Strategy Deep Dive</div><div class="meeting-meta"><span>Jun 27</span><span>38 min</span><span>4 participants</span></div></div>
+          <div class="meeting-stats"><div><div class="m-stat-val">3</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">5</div><div class="m-stat-label">Actions</div></div></div>
+          <span class="tag tag-amber">⚑ Alert</span>
+        </div>
+        <div class="meeting-row" onclick="showPage('detail')">
+          <div class="meeting-icon-box">🚀</div>
+          <div class="meeting-info"><div class="meeting-title">Series A Fundraising Prep</div><div class="meeting-meta"><span>Jun 25</span><span>74 min</span><span>3 participants</span></div></div>
+          <div class="meeting-stats"><div><div class="m-stat-val">5</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">9</div><div class="m-stat-label">Actions</div></div></div>
+          <span class="tag tag-green">✓ Done</span>
+        </div>
+        <div class="meeting-row" onclick="showPage('detail')">
+          <div class="meeting-icon-box">🎨</div>
+          <div class="meeting-info"><div class="meeting-title">Homepage Redesign Kickoff</div><div class="meeting-meta"><span>Jun 24</span><span>45 min</span><span>5 participants</span></div></div>
+          <div class="meeting-stats"><div><div class="m-stat-val">4</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">7</div><div class="m-stat-label">Actions</div></div></div>
+          <span class="tag tag-amber">● Processing</span>
+        </div>
+      </div>
+
+      <!-- Open actions -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;">Open Action Items</div>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:12px;" onclick="showPage('actions')">View all →</button>
+      </div>
+      <div class="card">
+        <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Finalize pricing tiers before investor deck</div><div class="owner-chip"><div class="owner-initial">A</div>Aryan</div><span class="tag tag-red" style="margin-left:10px;">Overdue</span></div>
+        <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Send NDA to Sequoia partnership team</div><div class="owner-chip"><div class="owner-initial" style="background:linear-gradient(135deg,#10b981,#059669);">R</div>Riya</div><span class="tag tag-amber" style="margin-left:10px;">Jun 30</span></div>
+        <div class="action-row"><div class="checkbox done"></div><div class="action-text done" style="flex:1;">Set up Vercel production environment</div><div class="owner-chip"><div class="owner-initial" style="background:linear-gradient(135deg,#f59e0b,#d97706);">K</div>Karan</div><span class="tag tag-green" style="margin-left:10px;">Done</span></div>
+        <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Create onboarding flow for new hires</div><div class="owner-chip"><div class="owner-initial">A</div>Aryan</div><span class="tag tag-gray" style="margin-left:10px;">Jul 5</span></div>
+      </div>
+    </div>
+
+    <div>
+      <!-- Recent decisions -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;">Recent Decisions</div>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:12px;" onclick="showPage('decisions')">All →</button>
+      </div>
+      <div class="card mb-16">
+        <div class="decision-row"><div class="decision-dot"></div><div><div class="decision-text">Launch beta August 25 with 50 early access users</div><div class="decision-meta"><span>Today</span><span>Roadmap Review</span></div></div></div>
+        <div class="decision-row"><div class="decision-dot"></div><div><div class="decision-text">Set pricing at $79/month for Startup plan</div><div class="decision-meta"><span>Jun 27</span><span>Pricing Strategy</span></div></div></div>
+        <div class="decision-row"><div class="decision-dot"></div><div><div class="decision-text">Raise $2M seed round, close by August 2026</div><div class="decision-meta"><span>Jun 25</span><span>Fundraising Prep</span></div></div></div>
+        <div class="decision-row"><div class="decision-dot decision-dot-amber"></div><div><div class="decision-text">Use Stripe for payments ⚑ conflict detected</div><div class="decision-meta"><span>Apr 3</span><span>Tech Stack Review</span></div></div></div>
+      </div>
+
+      <!-- DNA Card -->
+      <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Last Meeting DNA</div>
+      <div class="card p-20">
+        <div style="font-size:13.5px;font-weight:600;margin-bottom:16px;">Q3 Roadmap Review · Jun 29</div>
+        <div style="display:flex;gap:16px;align-items:center;margin-bottom:16px;">
+          <div class="health-ring" style="--pct:87;">
+            <div class="health-score">87</div>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:15px;font-weight:700;letter-spacing:-0.3px;">Good Meeting</div>
+            <div style="font-size:12.5px;color:var(--text-muted);">Health score · Top 20% this month</div>
+          </div>
+        </div>
+        <div class="dna-grid">
+          <div class="dna-row"><span class="dna-label">Decisions</span><span class="dna-val good">7 clear ✓</span></div>
+          <div class="dna-row"><span class="dna-label">All tasks assigned</span><span class="dna-val good">Yes ✓</span></div>
+          <div class="dna-row"><span class="dna-label">Debate level</span><span class="dna-val warn">Medium</span></div>
+          <div class="dna-row"><span class="dna-label">Participation</span><span class="dna-val good">Balanced ✓</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MEETINGS ── -->
+<div class="page" id="page-meetings">
+  <div class="page-header">
+    <div><div class="page-title">Meetings</div><div class="page-sub">47 meetings · 94h of company knowledge</div></div>
+    <div class="header-actions">
+      <button class="btn btn-ghost">Filter ▾</button>
+      <button class="btn btn-primary" onclick="showPage('upload')">↑ Upload</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="meeting-row" onclick="showPage('detail')"><div class="meeting-icon-box">🎯</div><div class="meeting-info"><div class="meeting-title">Q3 Product Roadmap Review</div><div class="meeting-meta"><span>Jun 29</span><span>52 min</span><span>6 participants</span></div></div><div class="meeting-stats"><div><div class="m-stat-val">7</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">12</div><div class="m-stat-label">Actions</div></div><div><div class="m-stat-val">87</div><div class="m-stat-label">Health</div></div></div><span class="tag tag-green">✓ Done</span></div>
+    <div class="meeting-row" onclick="showPage('detail')"><div class="meeting-icon-box">💰</div><div class="meeting-info"><div class="meeting-title">Pricing Strategy Deep Dive</div><div class="meeting-meta"><span>Jun 27</span><span>38 min</span><span>4 participants</span></div></div><div class="meeting-stats"><div><div class="m-stat-val">3</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">5</div><div class="m-stat-label">Actions</div></div><div><div class="m-stat-val">72</div><div class="m-stat-label">Health</div></div></div><span class="tag tag-amber">⚑ Alert</span></div>
+    <div class="meeting-row" onclick="showPage('detail')"><div class="meeting-icon-box">🚀</div><div class="meeting-info"><div class="meeting-title">Series A Fundraising Prep</div><div class="meeting-meta"><span>Jun 25</span><span>74 min</span><span>3 participants</span></div></div><div class="meeting-stats"><div><div class="m-stat-val">5</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">9</div><div class="m-stat-label">Actions</div></div><div><div class="m-stat-val">91</div><div class="m-stat-label">Health</div></div></div><span class="tag tag-green">✓ Done</span></div>
+    <div class="meeting-row" onclick="showPage('detail')"><div class="meeting-icon-box">🎨</div><div class="meeting-info"><div class="meeting-title">Homepage Redesign Kickoff</div><div class="meeting-meta"><span>Jun 24</span><span>45 min</span><span>5 participants</span></div></div><div class="meeting-stats"><div><div class="m-stat-val">4</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">7</div><div class="m-stat-label">Actions</div></div><div><div class="m-stat-val">—</div><div class="m-stat-label">Health</div></div></div><span class="tag tag-amber">● Processing</span></div>
+    <div class="meeting-row" onclick="showPage('detail')"><div class="meeting-icon-box">👥</div><div class="meeting-info"><div class="meeting-title">Team Hiring & Culture Review</div><div class="meeting-meta"><span>Jun 20</span><span>61 min</span><span>4 participants</span></div></div><div class="meeting-stats"><div><div class="m-stat-val">6</div><div class="m-stat-label">Decisions</div></div><div><div class="m-stat-val">8</div><div class="m-stat-label">Actions</div></div><div><div class="m-stat-val">79</div><div class="m-stat-label">Health</div></div></div><span class="tag tag-green">✓ Done</span></div>
+  </div>
+</div>
+
+<!-- ── MEETING DETAIL ── -->
+<div class="page" id="page-detail">
+  <div class="page-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="btn btn-ghost" onclick="showPage('meetings')" style="padding:7px 12px;font-size:12px;">← Back</button>
+      <div><div class="page-title">Q3 Product Roadmap Review</div><div class="page-sub">Jun 29, 2026 · 52 minutes · 6 participants</div></div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ghost">⤓ Export</button>
+      <button class="btn btn-ghost">⤢ Share</button>
+    </div>
+  </div>
+
+  <!-- Header card -->
+  <div class="card p-24 mb-24">
+    <div style="display:flex;gap:8px;margin-bottom:20px;">
+      <span class="tag tag-green">✓ Processed</span>
+      <span class="tag tag-blue">🎯 Product</span>
+      <span class="tag tag-gray">Q3 Planning</span>
+      <span class="tag tag-blue">🌐 Automatically detected</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+      <div><div style="font-size:24px;font-weight:700;font-family:'Playfair Display',serif;">7</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Decisions made</div></div>
+      <div><div style="font-size:24px;font-weight:700;font-family:'Playfair Display',serif;">12</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Action items</div></div>
+      <div><div style="font-size:24px;font-weight:700;font-family:'Playfair Display',serif;">6</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px;">Participants</div></div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <div class="health-ring" style="--pct:87;width:50px;height:50px;">
+          <div class="health-score" style="font-size:12px;">87</div>
+        </div>
+        <div><div style="font-size:14px;font-weight:600;">Good</div><div style="font-size:11.5px;color:var(--text-muted);">Health Score</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'dtab-summary')">Summary</button>
+    <button class="tab" onclick="switchTab(this,'dtab-decisions')">Decisions</button>
+    <button class="tab" onclick="switchTab(this,'dtab-actions')">Action Items</button>
+    <button class="tab" onclick="switchTab(this,'dtab-transcript')">Transcript</button>
+    <button class="tab" onclick="switchTab(this,'dtab-participants')">Participants</button>
+  </div>
+
+  <div id="dtab-summary">
+    <div class="two-col">
+      <div>
+        <div class="card p-20 mb-16">
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Executive Summary</div>
+          <p style="font-size:13.5px;line-height:1.8;color:var(--text-mid);">The Q3 roadmap review confirmed beta launch for August 25 with 50 early access users. Mobile app is deprioritized until post-beta. Engineering will focus entirely on core web features. Investor readiness is a parallel workstream — Aryan owns the deck, due July 10.</p>
+        </div>
+        <div class="card p-20">
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Key Topics</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;">
+            <span class="tag tag-blue">Beta launch</span><span class="tag tag-blue">Onboarding flow</span><span class="tag tag-blue">Pricing tiers</span><span class="tag tag-blue">Infrastructure</span><span class="tag tag-blue">Mobile app</span><span class="tag tag-blue">Investor deck</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card mb-16">
+          <div class="card-header"><div class="card-title">Top Decisions</div></div>
+          <div class="decision-row"><div class="decision-dot"></div><div class="decision-text">Launch beta Aug 25 with 50 users</div></div>
+          <div class="decision-row"><div class="decision-dot"></div><div class="decision-text">Deprioritize mobile app post-beta</div></div>
+          <div class="decision-row"><div class="decision-dot"></div><div class="decision-text">Aryan owns investor deck · Jul 10</div></div>
+        </div>
+        <div class="card p-20">
+          <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Next Steps</div>
+          <div style="font-size:13px;color:var(--text-muted);line-height:2;">→ Follow-up meeting: Jul 6<br>→ Pricing deck by Jun 30<br>→ Sprint planning starts Jul 1<br>→ Beta list finalized by Jul 15</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dtab-decisions" style="display:none;">
+    <div class="card">
+      <div class="decision-row"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Launch beta August 25 with 50 early access users from waitlist</div><div class="decision-meta"><span>10:14 AM</span><span>Proposed by Aryan</span><span>Unanimous</span></div></div><span class="tag tag-green">Strategic</span></div>
+      <div class="decision-row"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Deprioritize mobile app until post-beta — engineering focus on web</div><div class="decision-meta"><span>10:28 AM</span><span>Proposed by Karan</span><span>4-1 vote</span></div></div><span class="tag tag-blue">Product</span></div>
+      <div class="decision-row"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Aryan owns Series A investor deck, deadline July 10</div><div class="decision-meta"><span>10:35 AM</span><span>Proposed by Riya</span><span>Agreed</span></div></div><span class="tag tag-blue">Ownership</span></div>
+      <div class="decision-row"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Priya leads onboarding redesign before beta</div><div class="decision-meta"><span>10:41 AM</span><span>Proposed by Aryan</span><span>Agreed</span></div></div><span class="tag tag-blue">Product</span></div>
+    </div>
+  </div>
+
+  <div id="dtab-actions" style="display:none;">
+    <div class="card">
+      <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Finalize beta user waitlist and send invites</div><div class="owner-chip"><div class="owner-initial">A</div>Aryan</div><span class="tag tag-amber" style="margin-left:12px;">Jul 1</span></div>
+      <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Complete investor deck first draft</div><div class="owner-chip"><div class="owner-initial">A</div>Aryan</div><span class="tag tag-gray" style="margin-left:12px;">Jul 10</span></div>
+      <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Redesign onboarding flow wireframes</div><div class="owner-chip"><div class="owner-initial" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);">P</div>Priya</div><span class="tag tag-amber" style="margin-left:12px;">Jul 5</span></div>
+      <div class="action-row"><div class="checkbox done"></div><div class="action-text done" style="flex:1;">Set up Vercel production environment</div><div class="owner-chip"><div class="owner-initial" style="background:linear-gradient(135deg,#f59e0b,#d97706);">K</div>Karan</div><span class="tag tag-green" style="margin-left:12px;">Done ✓</span></div>
+    </div>
+  </div>
+
+  <div id="dtab-transcript" style="display:none;">
+    <div class="card">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border-soft);">
+        <div style="display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:8px 12px;">
+          <span style="color:var(--text-dim);">◎</span>
+          <input type="text" placeholder="Search transcript…" style="flex:1;border:none;outline:none;font-family:Inter;font-size:13px;color:var(--text);background:none;"/>
+        </div>
+      </div>
+      <div class="transcript-line"><div class="transcript-time">00:00</div><div class="transcript-speaker">Aryan</div><div class="transcript-text">Alright everyone, let's get started. Today we're reviewing the Q3 roadmap and making hard calls about priorities.</div></div>
+      <div class="transcript-line"><div class="transcript-time">00:42</div><div class="transcript-speaker">Riya</div><div class="transcript-text">Before we dive in — the <mark>beta timeline</mark> needs to be locked today. We've been going back and forth for two weeks.</div></div>
+      <div class="transcript-line"><div class="transcript-time">01:15</div><div class="transcript-speaker">Aryan</div><div class="transcript-text">My proposal: <mark>August 25th beta launch</mark>, 50 users max from the waitlist. We can handle that with current infrastructure.</div></div>
+      <div class="transcript-line"><div class="transcript-time">01:58</div><div class="transcript-speaker">Karan</div><div class="transcript-text">From engineering side — we can hit that if we drop the <mark>mobile app from Q3 scope</mark> entirely. It's splitting our focus.</div></div>
+      <div class="transcript-line"><div class="transcript-time">02:34</div><div class="transcript-speaker">Priya</div><div class="transcript-text">I'm okay with that. But the onboarding needs a full redesign before we let 50 people in. Right now it's confusing.</div></div>
+      <div class="transcript-line"><div class="transcript-time">03:18</div><div class="transcript-speaker">Aryan</div><div class="transcript-text">Priya, can you own the onboarding redesign? Wireframes by July 5th?</div></div>
+      <div class="transcript-line"><div class="transcript-time">03:45</div><div class="transcript-speaker">Riya</div><div class="transcript-text">Decision: <mark>beta August 25, mobile deprioritized, Priya owns onboarding.</mark> Everyone aligned?</div></div>
+    </div>
+  </div>
+
+  <div id="dtab-participants" style="display:none;">
+    <div class="card">
+      <div class="participant-row"><div class="p-avatar" style="background:linear-gradient(135deg,#667eea,#764ba2);">A</div><div><div class="p-name">Aryan Sharma</div><div class="p-role">Co-founder & CEO</div></div><div class="talk-bar"><div class="talk-bg"><div class="talk-fill" style="width:68px;"></div></div><div class="talk-pct">42%</div></div></div>
+      <div class="participant-row"><div class="p-avatar" style="background:linear-gradient(135deg,#10b981,#059669);">R</div><div><div class="p-name">Riya Kapoor</div><div class="p-role">Co-founder & COO</div></div><div class="talk-bar"><div class="talk-bg"><div class="talk-fill" style="width:40px;"></div></div><div class="talk-pct">25%</div></div></div>
+      <div class="participant-row"><div class="p-avatar" style="background:linear-gradient(135deg,#f59e0b,#d97706);">K</div><div><div class="p-name">Karan Mehta</div><div class="p-role">Head of Engineering</div></div><div class="talk-bar"><div class="talk-bg"><div class="talk-fill" style="width:29px;"></div></div><div class="talk-pct">18%</div></div></div>
+      <div class="participant-row"><div class="p-avatar" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);">P</div><div><div class="p-name">Priya Nair</div><div class="p-role">Product Designer</div></div><div class="talk-bar"><div class="talk-bg"><div class="talk-fill" style="width:16px;"></div></div><div class="talk-pct">10%</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DECISIONS ── -->
+<div class="page" id="page-decisions">
+  <div class="page-header">
+    <div><div class="page-title">Decisions Hub</div><div class="page-sub">134 decisions across 47 meetings</div></div>
+    <div class="header-actions"><button class="btn btn-ghost">Filter ▾</button><button class="btn btn-ghost">Export ⤓</button></div>
+  </div>
+  <div class="three-col mb-24">
+    <div class="stat-card"><div class="stat-label">Total Decisions</div><div class="stat-value">134</div><div class="stat-delta delta-up">↑ 12 this week</div></div>
+    <div class="stat-card"><div class="stat-label">With Clear Owner</div><div class="stat-value">89%</div><div class="stat-delta delta-up">↑ 4% this month</div></div>
+    <div class="stat-card"><div class="stat-label">Contradictions</div><div class="stat-value" style="color:var(--amber);">2</div><div class="stat-delta" style="color:var(--amber);">Needs review</div></div>
+  </div>
+  <div class="card">
+    <div class="card-header"><div class="card-title">All Decisions</div><div style="display:flex;gap:7px;"><span class="tag tag-blue" style="cursor:pointer;">All</span><span class="tag tag-gray" style="cursor:pointer;">Strategic</span><span class="tag tag-gray" style="cursor:pointer;">Product</span><span class="tag tag-gray" style="cursor:pointer;">Tech</span></div></div>
+    <div class="decision-row" onclick="showPage('detail')"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Launch beta August 25 with 50 early access users</div><div class="decision-meta"><span>Jun 29</span><span>Q3 Roadmap Review</span></div></div><span class="tag tag-green">Strategic</span></div>
+    <div class="decision-row" onclick="showPage('detail')"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Deprioritize mobile app until after beta launch</div><div class="decision-meta"><span>Jun 29</span><span>Q3 Roadmap Review</span></div></div><span class="tag tag-blue">Product</span></div>
+    <div class="decision-row" onclick="showPage('detail')"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Set Startup plan pricing at $79/month</div><div class="decision-meta"><span>Jun 27</span><span>Pricing Strategy</span></div></div><span class="tag tag-green">Strategic</span></div>
+    <div class="decision-row" onclick="showPage('detail')"><div class="decision-dot"></div><div style="flex:1;"><div class="decision-text">Raise $2M seed round, close by August 2026</div><div class="decision-meta"><span>Jun 25</span><span>Fundraising Prep</span></div></div><span class="tag tag-green">Strategic</span></div>
+    <div class="decision-row" onclick="showPage('detail')"><div class="decision-dot decision-dot-amber"></div><div style="flex:1;"><div class="decision-text">Use Stripe for payment processing ⚑ <span style="font-size:11.5px;color:var(--amber);">(Conflicts with Jun 27)</span></div><div class="decision-meta"><span>Apr 3</span><span>Tech Stack Review</span></div></div><span class="tag tag-amber">⚑ Alert</span></div>
+  </div>
+</div>
+
+<!-- ── ACTIONS ── -->
+<div class="page" id="page-actions">
+  <div class="page-header">
+    <div><div class="page-title">Action Center</div><div class="page-sub">28 open tasks across all meetings</div></div>
+    <div class="header-actions"><button class="btn btn-ghost">Filter ▾</button></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;" class="mb-24">
+    <div class="stat-card"><div class="stat-label">Open</div><div class="stat-value">28</div></div>
+    <div class="stat-card"><div class="stat-label">Overdue</div><div class="stat-value" style="color:var(--red);">6</div></div>
+    <div class="stat-card"><div class="stat-label">Done This Week</div><div class="stat-value">14</div></div>
+    <div class="stat-card"><div class="stat-label">Completion</div><div class="stat-value">67%</div></div>
+  </div>
+  <div style="font-size:12px;font-weight:600;color:var(--red);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">⚠ Overdue</div>
+  <div class="card mb-20">
+    <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Finalize pricing tiers before investor deck</div><div class="owner-chip"><div class="owner-initial">A</div>Aryan</div><span class="tag tag-red" style="margin-left:12px;">Jun 28</span></div>
+    <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Review homepage wireframes from Priya</div><div class="owner-chip"><div class="owner-initial">A</div>Aryan</div><span class="tag tag-red" style="margin-left:12px;">Jun 26</span></div>
+    <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Send Q2 metrics report to team leads</div><div class="owner-chip"><div class="owner-initial" style="background:linear-gradient(135deg,#10b981,#059669);">R</div>Riya</div><span class="tag tag-red" style="margin-left:12px;">Jun 25</span></div>
+  </div>
+  <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Due This Week</div>
+  <div class="card">
+    <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Send NDA to Sequoia partnership team</div><div class="owner-chip"><div class="owner-initial" style="background:linear-gradient(135deg,#10b981,#059669);">R</div>Riya</div><span class="tag tag-amber" style="margin-left:12px;">Jun 30</span></div>
+    <div class="action-row"><div class="checkbox"></div><div class="action-text" style="flex:1;">Finalize beta waitlist and send invites</div><div class="owner-chip"><div class="owner-initial">A</div>Aryan</div><span class="tag tag-amber" style="margin-left:12px;">Jul 1</span></div>
+    <div class="action-row"><div class="checkbox done"></div><div class="action-text done" style="flex:1;">Set up Vercel production environment</div><div class="owner-chip"><div class="owner-initial" style="background:linear-gradient(135deg,#f59e0b,#d97706);">K</div>Karan</div><span class="tag tag-green" style="margin-left:12px;">Done ✓</span></div>
+  </div>
+</div>
+
+<!-- ── SEARCH ── -->
+<div class="page" id="page-search">
+  <div class="page-header">
+    <div><div class="page-title">Search Memory</div><div class="page-sub">Ask anything about your meetings</div></div>
+  </div>
+  <div class="search-wrap">
+    <span style="font-size:16px;color:var(--text-dim);">◎</span>
+    <input class="search-inp" type="text" placeholder='Try "What did we decide about pricing?" or "Who owns the website redesign?"' />
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+    <span class="tag tag-blue" style="cursor:pointer;padding:5px 12px;">What did we decide about pricing?</span>
+    <span class="tag tag-blue" style="cursor:pointer;padding:5px 12px;">Who owns the redesign?</span>
+    <span class="tag tag-blue" style="cursor:pointer;padding:5px 12px;">When did we discuss mobile app?</span>
+    <span class="tag tag-blue" style="cursor:pointer;padding:5px 12px;">Fundraising meetings</span>
+  </div>
+  <div class="card">
+    <div class="search-result" onclick="showPage('detail')"><div class="search-result-title">Pricing Strategy Deep Dive · Jun 27</div><div class="search-result-excerpt">Team agreed to set <mark>Startup plan at $79/month</mark> with a free tier limited to 5 meetings. Enterprise pricing deferred pending market research.</div><div class="search-result-meta"><span>💰 Pricing Strategy</span><span>Jun 27</span><span>3 decisions</span></div></div>
+    <div class="search-result" onclick="showPage('detail')"><div class="search-result-title">Q3 Product Roadmap Review · Jun 29</div><div class="search-result-excerpt">Pricing tiers confirmed final. Aryan to include <mark>pricing rationale in investor deck</mark> due July 10.</div><div class="search-result-meta"><span>🎯 Roadmap Review</span><span>Jun 29</span><span>7 decisions</span></div></div>
+    <div class="search-result" onclick="showPage('detail')"><div class="search-result-title">Series A Fundraising Prep · Jun 25</div><div class="search-result-excerpt">Discussion included <mark>pricing model validation</mark>. $79 price point considered competitive for early-stage startups.</div><div class="search-result-meta"><span>🚀 Fundraising Prep</span><span>Jun 25</span><span>5 decisions</span></div></div>
+  </div>
+</div>
+
+<!-- ── TIMELINE ── -->
+<div class="page" id="page-timeline">
+  <div class="page-header">
+    <div><div class="page-title">Decision Timeline</div><div class="page-sub">Your company's history — every decision in order</div></div>
+    <div class="header-actions"><button class="btn btn-ghost">Filter by topic ▾</button></div>
+  </div>
+  <div class="two-col">
+    <div class="card p-24">
+      <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:20px;">June 2026</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-date">Jun 29, 2026</div><div class="tl-text">Launch beta August 25 with 50 early access users</div><div class="tl-source" onclick="showPage('detail')">Q3 Roadmap Review →</div></div>
+        <div class="tl-item"><div class="tl-date">Jun 29, 2026</div><div class="tl-text">Deprioritize mobile app until post-beta</div><div class="tl-source" onclick="showPage('detail')">Q3 Roadmap Review →</div></div>
+        <div class="tl-item"><div class="tl-date">Jun 27, 2026</div><div class="tl-text">Startup plan priced at $79/month</div><div class="tl-source" onclick="showPage('detail')">Pricing Strategy →</div></div>
+        <div class="tl-item"><div class="tl-date">Jun 25, 2026</div><div class="tl-text">Raise $2M seed, target close August 2026</div><div class="tl-source" onclick="showPage('detail')">Fundraising Prep →</div></div>
+        <div class="tl-item"><div class="tl-date">Jun 24, 2026</div><div class="tl-text">Homepage redesign before beta launch</div><div class="tl-source" onclick="showPage('detail')">Homepage Kickoff →</div></div>
+        <div class="tl-item"><div class="tl-date">Jun 20, 2026</div><div class="tl-text">Hire 2 senior engineers in Q3</div><div class="tl-source" onclick="showPage('detail')">Team Hiring Review →</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Topic Threads</div></div>
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border-soft);cursor:pointer;" class="meeting-row" style="padding:14px 16px;">
+          <div style="flex:1;"><div style="font-size:13px;font-weight:500;">💰 Pricing Strategy</div><div style="font-size:11.5px;color:var(--text-muted);margin-top:3px;">4 meetings · 3 decisions · Jan→Jun</div></div>
+          <span class="tag tag-blue">4 meetings</span>
+        </div>
+        <div style="padding:14px 16px;border-bottom:1px solid var(--border-soft);cursor:pointer;display:flex;align-items:center;gap:12px;">
+          <div style="flex:1;"><div style="font-size:13px;font-weight:500;">🚀 Beta Launch</div><div style="font-size:11.5px;color:var(--text-muted);margin-top:3px;">6 meetings · 5 decisions · Mar→Jun</div></div>
+          <span class="tag tag-blue">6 meetings</span>
+        </div>
+        <div style="padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;">
+          <div style="flex:1;"><div style="font-size:13px;font-weight:500;">💳 Payment Stack</div><div style="font-size:11.5px;color:var(--amber);margin-top:3px;">Stripe vs Razorpay — unresolved ⚑</div></div>
+          <span class="tag tag-amber">⚑ Conflict</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ALERTS ── -->
+<div class="page" id="page-alerts">
+  <div class="page-header">
+    <div><div class="page-title">Alerts</div><div class="page-sub">2 issues need your attention</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="card p-24" style="border-left:3px solid #f59e0b;">
+      <div style="display:flex;gap:14px;">
+        <div style="font-size:24px;flex-shrink:0;">⚑</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:var(--amber);margin-bottom:8px;">Contradiction — Payment Provider</div>
+          <div style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:16px;"><strong>Apr 3:</strong> Decided to use <strong>Stripe</strong> for payments — unanimous.<br><strong>Jun 27:</strong> Razorpay discussed as primary option. No decision recorded.</div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-ghost" style="font-size:12px;padding:7px 14px;">✓ Mark resolved</button>
+            <button class="btn btn-ghost" style="font-size:12px;padding:7px 14px;" onclick="showPage('detail')">View meetings →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card p-24" style="border-left:3px solid #ef4444;">
+      <div style="display:flex;gap:14px;">
+        <div style="font-size:24px;flex-shrink:0;">⚠</div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:var(--red);margin-bottom:8px;">6 Action Items Overdue</div>
+          <div style="font-size:13.5px;color:var(--text-mid);line-height:1.7;margin-bottom:16px;">4 assigned to <strong>Aryan Sharma</strong>. Oldest is 9 days overdue from Jun 20.</div>
+          <button class="btn btn-ghost" style="font-size:12px;padding:7px 14px;" onclick="showPage('actions')">Review tasks →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── UPLOAD ── -->
+<div class="page" id="page-upload">
+  <div class="page-header">
+    <div><div class="page-title">Upload Meeting</div><div class="page-sub">Turn any recording into structured knowledge</div></div>
+  </div>
+  <div style="max-width:600px;">
+    <div class="upload-zone mb-20">
+      <div class="upload-icon">↑</div>
+      <div class="upload-title">Drop your recording here</div>
+      <div class="upload-sub">or click to browse files</div>
+      <div class="upload-formats"><span class="tag tag-gray">MP3</span><span class="tag tag-gray">MP4</span><span class="tag tag-gray">WAV</span><span class="tag tag-gray">M4A</span><span class="tag tag-gray">WEBM</span></div>
+    </div>
+    <div class="card p-20 mb-16">
+      <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">Meeting Details</div>
+      <div class="form-group"><label class="form-label">Meeting Title</label><input class="form-input" type="text" placeholder="e.g. Q3 Planning Session"/></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date"/></div>
+        <div class="form-group"><label class="form-label">Category</label><select class="form-input"><option>Product</option><option>Strategy</option><option>Engineering</option><option>Sales</option><option>Finance</option></select></div>
+      </div>
+    </div>
+    <div class="card p-20 mb-20">
+      <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">MeetingOS will extract</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>Full transcript</div>
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>Executive summary</div>
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>All decisions</div>
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>Action items + owners</div>
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>Participant analysis</div>
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>Contradiction check</div>
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>Meeting health score</div>
+        <div style="display:flex;gap:8px;font-size:13px;"><span style="color:var(--green);">✓</span>Knowledge indexing</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;font-size:14px;border-radius:10px;" onclick="showPage('dashboard')">⬡ Process Meeting</button>
+    <div style="text-align:center;font-size:12px;color:var(--text-dim);margin-top:10px;">Usually 2–4 minutes · You'll be notified when ready</div>
+
+  <!-- Multilingual Support Banner -->
+  <div class="mb-6" style="background: #e8f0fb; border: 1px solid #bdd7f5; border-radius: var(--radius); padding: 16px 18px; display: flex; gap: 12px; align-items: flex-start;">
+    <div style="font-size: 18px; flex-shrink: 0;">🌐</div>
+    <div>
+      <div style="font-size: 13px; font-weight: 600; color: #0056a3; margin-bottom: 3px;">Multilingual AI — 20+ languages supported</div>
+      <div style="font-size: 12px; color: #0056a3; opacity: 0.8; line-height: 1.5;">
+        MeetingOS automatically detects and transcribes meetings in Hindi, Urdu, Tamil, Telugu, Bengali, Marathi, Gujarati, Punjabi, Kannada, Malayalam, and 10+ other languages — including code-switched conversations that mix languages. No language selection needed.
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Hindi</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Urdu</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Tamil</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Telugu</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Bengali</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Marathi</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Punjabi</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Gujarati</span>
+        <span style="font-size: 10.5px; padding: 2px 8px; border-radius: 4px; background: rgba(0,86,163,0.08); color: #0056a3;">Kannada</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</main>
+</div>
+</div><!-- end #app -->
+
+<script>
+/* ─── PAGE TRANSITIONS ─── */
+function openApp() {
+  const landing = document.getElementById('landing');
+  const app = document.getElementById('app');
+  landing.classList.add('page-exit');
+  setTimeout(() => {
+    landing.style.display = 'none';
+    landing.classList.remove('page-exit');
+    app.style.display = 'block';
+    app.classList.add('page-enter');
+    document.body.style.overflow = 'auto';
+    window.scrollTo(0, 0);
+    animateCounters();
+    setTimeout(() => app.classList.remove('page-enter'), 500);
+  }, 350);
+}
+
+function closeDashboard() {
+  const landing = document.getElementById('landing');
+  const app = document.getElementById('app');
+  app.classList.add('page-exit');
+  setTimeout(() => {
+    app.style.display = 'none';
+    app.classList.remove('page-exit');
+    landing.style.display = 'block';
+    window.scrollTo(0, 0);
+    // Reset reveal state so landing animations replay
+    document.querySelectorAll('#landing .reveal, #landing .reveal-left, #landing .reveal-right, #landing .reveal-scale').forEach(el => {
+      el.classList.remove('visible');
+    });
+    setTimeout(() => initScrollReveal(), 50);
+  }, 350);
+}
+
+function showPage(id) {
+  const pages = document.querySelectorAll('.page');
+  const activePage = document.querySelector('.page.active');
+  const newPage = document.getElementById('page-' + id);
+  
+  // Fade out current page
+  if (activePage && activePage !== newPage) {
+    activePage.style.opacity = '0';
+    activePage.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      activePage.classList.remove('active');
+      activePage.style.opacity = '';
+      activePage.style.transform = '';
+      
+      // Show new page with animation
+      newPage.classList.add('active');
+      newPage.style.opacity = '0';
+      newPage.style.transform = 'translateY(15px)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          newPage.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+          newPage.style.opacity = '1';
+          newPage.style.transform = 'translateY(0)';
+          setTimeout(() => {
+            newPage.style.transition = '';
+          }, 350);
+        });
+      });
+    }, 200);
+  } else {
+    newPage.classList.add('active');
+  }
+  
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const map = { dashboard:0, meetings:1, upload:2, decisions:3, actions:4, search:5, timeline:6, alerts:7, detail:1 };
+  const items = document.querySelectorAll('#app .nav-item');
+  if (map[id] !== undefined && items[map[id]]) items[map[id]].classList.add('active');
+  document.querySelector('.app-main').scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+const detailTabs = ['dtab-summary','dtab-decisions','dtab-actions','dtab-transcript','dtab-participants'];
+function switchTab(el, tabId) {
+  el.closest('.tabs').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  detailTabs.forEach(id => {
+    const panel = document.getElementById(id);
+    if (panel) {
+      if (id === tabId) {
+        panel.style.display = 'block';
+        panel.style.opacity = '0';
+        panel.style.transform = 'translateY(8px)';
+        requestAnimationFrame(() => {
+          panel.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+          panel.style.opacity = '1';
+          panel.style.transform = 'translateY(0)';
+          setTimeout(() => panel.style.transition = '', 300);
+        });
+      } else {
+        panel.style.display = 'none';
+        panel.style.opacity = '';
+        panel.style.transform = '';
+      }
+    }
+  });
+}
+
+/* ─── SCROLL REVEAL (Intersection Observer) ─── */
+function initScrollReveal() {
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+  if (!reveals.length) return;
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  
+  reveals.forEach(el => observer.observe(el));
+}
+
+/* ─── NAV SCROLL EFFECT ─── */
+function initNavScroll() {
+  const nav = document.querySelector('.l-nav');
+  if (!nav) return;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }, { passive: true });
+}
+
+/* ─── BUTTON RIPPLE ─── */
+function initRipples() {
+  document.querySelectorAll('.btn-hero-primary, .btn-primary').forEach(btn => {
+    btn.classList.add('btn-ripple');
+  });
+}
+
+/* ─── COUNTER ANIMATION ─── */
+function animateCounters() {
+  document.querySelectorAll('.counter-animate').forEach(el => {
+    const target = parseInt(el.getAttribute('data-target'));
+    if (isNaN(target)) return;
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1200;
+    const start = performance.now();
+    const initial = 0;
+    
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(initial + (target - initial) * eased);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+/* ─── PARALLAX HERO ─── */
+function initParallax() {
+  const heroVisual = document.querySelector('.hero-visual');
+  if (!heroVisual) return;
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    if (scrolled < 800) {
+      heroVisual.style.transform = `translateY(${scrolled * 0.06}px) scale(${1 - scrolled * 0.0001})`;
+      heroVisual.style.opacity = 1 - scrolled * 0.001;
+    }
+  }, { passive: true });
+}
+
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollReveal();
+  initNavScroll();
+  initRipples();
+  initParallax();
+  animateCounters();
+});
+</script>
+</body>
+</html>

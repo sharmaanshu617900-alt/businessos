@@ -1,0 +1,49 @@
+# ─── Dependencies ───
+node_modules/
+.pnp
+.pnp.js
+
+# ─── Next.js Build ───
+.next/
+out/
+
+# ─── Environment ───
+.env
+.env.local
+.env.production
+.env*.local
+
+# ─── IDE & OS ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ─── Debug ───
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── TypeScript ───
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── Testing ───
+coverage/
+
+# ─── Logs ───
+*.log
+/tmp/
+
+# ─── Vercel CLI cache ───
+.vercel/
+
+# ─── Separate experimental projects ───
+G0DM0D3/
+ui-ux-pro-max/
+
+# ─── Windows reserved names ───
+nul
