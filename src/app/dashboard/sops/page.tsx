@@ -65,21 +65,21 @@ const CATEGORIES = ["All", "Client", "Pricing", "Design", "Process", "Hiring", "
 
 export default function SOPsPage() {
   return (
-    <div className="min-h-screen p-6 lg:p-12 max-w-[1300px] mx-auto bg-graphite-0">
+    <div className="min-h-screen p-6 lg:p-12 max-w-[1300px] mx-auto">
       <header className="mb-16">
-        <p className="eyebrow text-ink-faint">Knowledge</p>
+        <p className="eyebrow text-ink-on-light-faint">Knowledge</p>
         <div className="flex items-end justify-between mt-3 flex-wrap gap-6">
-          <h1 className="heading-display text-[56px] lg:text-[80px] text-white leading-[1.0]">
+          <h1 className="heading-display text-[56px] lg:text-[80px] text-ink-on-light leading-[1.0]">
             The living
             <br />
-            <span style={{ fontStyle: "italic" }} className="text-ink-secondary">company playbook.</span>
+            <span style={{ fontStyle: "italic" }} className="text-ink-on-light-secondary">company playbook.</span>
           </h1>
-          <button className="inline-flex items-center gap-2 bg-white text-graphite-50 px-4 py-2 rounded-full text-[13px] font-medium hover:bg-ink-100 transition-colors">
+          <button className="inline-flex items-center gap-2 bg-[#0071e3] text-white px-4 py-2 rounded-full text-[13px] font-medium hover:bg-[#0062c9] transition-colors">
             <Plus size={13} />
             New SOP
           </button>
         </div>
-        <p className="mt-6 text-[15px] text-ink-tertiary max-w-xl leading-relaxed">
+        <p className="mt-6 text-[15px] text-ink-on-light-tertiary max-w-xl leading-relaxed">
           Generated from real meetings. Linked to real clients. Always
           up-to-date. The way your agency actually works, written down.
         </p>
@@ -92,8 +92,8 @@ export default function SOPsPage() {
             key={c}
             className={`px-4 py-2 rounded-full text-[12.5px] whitespace-nowrap transition-colors ${
               i === 0
-                ? "bg-white text-graphite-50 font-medium"
-                : "border border-hairline-2 text-ink-tertiary hover:text-white hover:bg-white/5"
+                ? "bg-[#1d1d1f] text-white font-medium"
+                : "border border-border-light text-ink-on-light-secondary hover:text-ink-on-light hover:bg-surface-light-2"
             }`}
           >
             {c}
@@ -110,44 +110,44 @@ export default function SOPsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.06, duration: 0.6 }}
-            className="surface-1 rounded-2xl p-6 card-lift cursor-pointer flex flex-col"
+            className="bg-white rounded-2xl p-6 shadow-sm border border-border-light-2 cursor-pointer flex flex-col hover:shadow-md transition-shadow"
           >
             <div className="flex items-start justify-between mb-8">
-              <div className="w-10 h-10 rounded-xl bg-graphite-300 flex items-center justify-center border border-hairline">
-                <FileText size={15} className="text-ink-secondary" strokeWidth={1.5} />
+              <div className="w-10 h-10 rounded-xl bg-surface-light-2 flex items-center justify-center border border-border-light-2">
+                <FileText size={15} className="text-ink-on-light-secondary" strokeWidth={1.5} />
               </div>
               <div className="flex items-center gap-2">
                 {sop.generated && (
-                  <span className="inline-flex items-center gap-1 text-[10px] eyebrow text-accent">
+                  <span className="inline-flex items-center gap-1 text-[10px] eyebrow text-[#8b5cf6]">
                     <Sparkles size={10} />
                     Auto
                   </span>
                 )}
-                <ArrowUpRight size={13} className="text-ink-faint" />
+                <ArrowUpRight size={13} className="text-ink-on-light-faint" />
               </div>
             </div>
 
-            <h3 className="text-[18px] font-display text-white leading-snug tracking-tight">
+            <h3 className="text-[18px] font-display text-ink-on-light leading-snug tracking-tight">
               {sop.title}
             </h3>
 
             <div className="mt-auto pt-8">
               <div className="flex items-center gap-2 mb-3">
-                <span className="eyebrow text-accent">{sop.category}</span>
+                <span className="eyebrow text-[#8b5cf6]">{sop.category}</span>
               </div>
-              <div className="flex items-center gap-3 text-[11px] text-ink-tertiary">
+              <div className="flex items-center gap-3 text-[11px] text-ink-on-light-tertiary">
                 <span className="flex items-center gap-1">
                   <Users size={10} />
                   {sop.clients.join(", ")}
                 </span>
-                <span className="text-ink-faint">·</span>
+                <span className="text-ink-on-light-faint">·</span>
                 <span className="flex items-center gap-1">
                   <Calendar size={10} />
                   {sop.updated}
                 </span>
                 {sop.linked > 0 && (
                   <>
-                    <span className="text-ink-faint">·</span>
+                    <span className="text-ink-on-light-faint">·</span>
                     <span>{sop.linked} linked</span>
                   </>
                 )}

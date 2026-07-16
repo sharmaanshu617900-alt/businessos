@@ -38,22 +38,22 @@ const TIMELINE = [
 
 export default function DecisionsPage() {
   return (
-    <div className="min-h-screen p-6 lg:p-12 max-w-[1200px] mx-auto bg-graphite-0">
+    <div className="min-h-screen p-6 lg:p-12 max-w-[1200px] mx-auto">
       {/* Header */}
       <header className="mb-16">
-        <p className="eyebrow text-ink-faint">Knowledge</p>
+        <p className="eyebrow text-ink-on-light-faint">Knowledge</p>
         <div className="flex items-end justify-between mt-3 flex-wrap gap-4">
-          <h1 className="heading-display text-[56px] lg:text-[80px] text-white leading-[1.0]">
+          <h1 className="heading-display text-[56px] lg:text-[80px] text-ink-on-light leading-[1.0]">
             Every decision,
             <br />
-            <span style={{ fontStyle: "italic" }} className="text-ink-secondary">forever remembered.</span>
+            <span style={{ fontStyle: "italic" }} className="text-ink-on-light-secondary">forever remembered.</span>
           </h1>
           <div className="flex items-center gap-2">
-            <button className="inline-flex items-center gap-2 border border-hairline-2 text-ink-primary px-4 py-2 rounded-full text-[13px] hover:bg-white/5 transition-colors">
-              <Filter size={13} className="text-ink-tertiary" />
+            <button className="inline-flex items-center gap-2 border border-border-light text-ink-on-light px-4 py-2 rounded-full text-[13px] hover:bg-surface-light-2 transition-colors">
+              <Filter size={13} className="text-ink-on-light-tertiary" />
               Filter
             </button>
-            <button className="inline-flex items-center gap-2 bg-white text-graphite-50 px-4 py-2 rounded-full text-[13px] font-medium hover:bg-ink-100 transition-colors">
+            <button className="inline-flex items-center gap-2 bg-[#0071e3] text-white px-4 py-2 rounded-full text-[13px] font-medium hover:bg-[#0062c9] transition-colors">
               <Plus size={13} />
               Capture
             </button>
@@ -62,16 +62,16 @@ export default function DecisionsPage() {
       </header>
 
       {/* Stat row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px mb-16 rounded-2xl overflow-hidden border border-hairline" style={{ background: "rgba(255,255,255,0.04)" }}>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-px mb-16 rounded-2xl overflow-hidden border border-border-light bg-white">
         {[
           { k: "247", l: "Decisions this month" },
           { k: "12",  l: "Clients tracked" },
           { k: "98%", l: "Approval rate" },
           { k: "4.2s", l: "Avg. search time" },
-        ].map((s) => (
-          <div key={s.l} className="bg-graphite-100 p-6">
-            <p className="heading-display text-[44px] lg:text-[56px] text-white leading-[0.9]">{s.k}</p>
-            <p className="mt-2 text-[12px] text-ink-tertiary">{s.l}</p>
+        ].map((s, i) => (
+          <div key={s.l} className={`p-6 ${i < 3 ? 'border-r border-border-light' : ''}`}>
+            <p className="heading-display text-[44px] lg:text-[56px] text-ink-on-light leading-[0.9]">{s.k}</p>
+            <p className="mt-2 text-[12px] text-ink-on-light-tertiary">{s.l}</p>
           </div>
         ))}
       </div>
@@ -79,10 +79,10 @@ export default function DecisionsPage() {
       {/* Timeline */}
       <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
         <div className="lg:col-span-3">
-          <p className="eyebrow text-ink-faint sticky top-8">Timeline</p>
+          <p className="eyebrow text-ink-on-light-faint sticky top-8">Timeline</p>
           <div className="mt-4 space-y-4">
             {TIMELINE.map((g) => (
-              <p key={g.day} className="text-[14px] font-display text-white">
+              <p key={g.day} className="text-[14px] font-display text-ink-on-light">
                 {g.day}
               </p>
             ))}
@@ -95,13 +95,13 @@ export default function DecisionsPage() {
             className="absolute left-2 top-2 bottom-2 w-px"
             style={{
               background:
-                "linear-gradient(to bottom, transparent, rgba(255,255,255,0.08) 5%, rgba(255,255,255,0.08) 95%, transparent)",
+                "linear-gradient(to bottom, transparent, rgba(0,0,0,0.08) 5%, rgba(0,0,0,0.08) 95%, transparent)",
             }}
           />
 
           {TIMELINE.map((group, gi) => (
             <div key={group.day} className="mb-12 last:mb-0">
-              <h2 className="text-[20px] font-display text-white mb-6 pl-10">{group.day}</h2>
+              <h2 className="text-[20px] font-display text-ink-on-light mb-6 pl-10">{group.day}</h2>
               <div className="space-y-3">
                 {group.items.map((d, i) => (
                   <motion.div
@@ -114,19 +114,19 @@ export default function DecisionsPage() {
                   >
                     {/* Timeline dot */}
                     <div
-                      className="absolute left-0 top-6 w-4 h-4 rounded-full bg-graphite-0 border-2"
+                      className="absolute left-0 top-6 w-4 h-4 rounded-full bg-white border-2"
                       style={{
                         borderColor:
-                          d.status === "Approved" ? "#9785ff" : "rgba(255,255,255,0.2)",
+                          d.status === "Approved" ? "#8b5cf6" : "rgba(0,0,0,0.2)",
                       }}
                     />
 
-                    <div className="surface-1 rounded-xl p-5 card-lift">
+                    <div className="bg-white rounded-xl p-5 shadow-sm border border-border-light-2 hover:shadow-md transition-shadow">
                       <div className="flex items-start justify-between gap-4 mb-3">
                         <div className="flex items-center gap-2">
-                          <span className="eyebrow text-accent">{d.client}</span>
-                          <span className="text-[10px] text-ink-faint">·</span>
-                          <span className="eyebrow text-ink-faint inline-flex items-center gap-1">
+                          <span className="eyebrow text-[#8b5cf6]">{d.client}</span>
+                          <span className="text-[10px] text-ink-on-light-faint">·</span>
+                          <span className="eyebrow text-ink-on-light-faint inline-flex items-center gap-1">
                             <Tag size={9} />
                             {d.tag}
                           </span>
@@ -134,28 +134,28 @@ export default function DecisionsPage() {
                         <span
                           className="text-[10px] eyebrow tracking-wider uppercase"
                           style={{
-                            color: d.status === "Approved" ? "#9785ff" : "#c4a766",
+                            color: d.status === "Approved" ? "#8b5cf6" : "#d97706",
                           }}
                         >
                           {d.status}
                         </span>
                       </div>
 
-                      <h3 className="text-[16px] lg:text-[17px] font-medium text-white leading-snug group-hover:text-accent transition-colors">
+                      <h3 className="text-[16px] lg:text-[17px] font-medium text-ink-on-light leading-snug group-hover:text-[#8b5cf6] transition-colors">
                         {d.title}
                       </h3>
 
-                      <div className="flex items-center gap-4 mt-4 text-[11.5px] text-ink-tertiary">
+                      <div className="flex items-center gap-4 mt-4 text-[11.5px] text-ink-on-light-tertiary">
                         <span className="flex items-center gap-1.5">
                           <User size={11} />
                           {d.who}
                         </span>
-                        <span className="text-ink-faint">·</span>
+                        <span className="text-ink-on-light-faint">·</span>
                         <span className="flex items-center gap-1.5">
                           <Clock size={11} />
                           {d.time}
                         </span>
-                        <span className="text-ink-faint">·</span>
+                        <span className="text-ink-on-light-faint">·</span>
                         <span className="flex items-center gap-1.5">
                           <CheckCircle2 size={11} />
                           Source linked

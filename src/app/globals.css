@@ -51,12 +51,28 @@
   --color-graphite-50: #8b8b93;
   --color-graphite-100: #2c2c2e;
   --color-graphite-300: #3a3a3c;
+  --color-graphite-400: #48484a;
+  --color-graphite-500: #636366;
+  --color-graphite-600: #8e8e93;
+
+  /* Light-theme semantic text colors (for light backgrounds) */
+  --color-ink-on-light: #1d1d1f;
+  --color-ink-on-light-secondary: #6e6e73;
+  --color-ink-on-light-tertiary: #86868b;
+  --color-ink-on-light-faint: #aeaeb2;
 
   /* Surface colors for dark themed pages */
   --color-surface-1: rgba(255, 255, 255, 0.04);
   --color-surface-elevated: rgba(255, 255, 255, 0.08);
   --color-hairline: rgba(255, 255, 255, 0.15);
   --color-hairline-2: rgba(255, 255, 255, 0.08);
+
+  /* Surface colors for light themed pages */
+  --color-surface-light-1: rgba(0, 0, 0, 0.02);
+  --color-surface-light-2: rgba(0, 0, 0, 0.04);
+  --color-surface-light-3: rgba(0, 0, 0, 0.06);
+  --color-border-light: rgba(0, 0, 0, 0.08);
+  --color-border-light-2: rgba(0, 0, 0, 0.05);
 }
 
 /* ============================================================
@@ -329,5 +345,31 @@
   }
   .tracking-apple-tight {
     letter-spacing: -0.04em;
+  }
+
+  /* Typography utility classes */
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .heading-display {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .font-display {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .card-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   }
 }
