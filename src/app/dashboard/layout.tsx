@@ -9,7 +9,7 @@ import {
   Video,
   Building2,
   CheckCircle2,
-  FileText,
+
   Brain,
   Puzzle,
   Settings,
@@ -29,7 +29,6 @@ const sidebarLinks = [
   { label: "Upload",         href: "/dashboard/upload",    icon: Upload,          group: "Overview" },
   { label: "Clients",        href: "/dashboard/clients",   icon: Building2,       group: "Knowledge" },
   { label: "Decisions",      href: "/dashboard/decisions", icon: CheckCircle2,    group: "Knowledge" },
-  { label: "SOPs",           href: "/dashboard/sops",      icon: FileText,        group: "Knowledge" },
   { label: "AI Chat",        href: "/dashboard/chat",     icon: MessageSquare,   group: "Intelligence" },
   { label: "Agency Brain",   href: "/dashboard/search",    icon: Brain,           group: "Intelligence" },
   { label: "Integrations",   href: "/dashboard/integrations", icon: Puzzle,       group: "Account" },
